@@ -15,15 +15,12 @@ func numeros(v chan<- int) {
 }
 
 func main() {
-	// ctx, cf := context.WithCancel(context.Background())
-	ctx, cf := context.WithTimeout(context.Background(), time.Second*2)
-	defer cf()
-
-	// go func() {
-	// 	time.Sleep(time.Second * 5)
-	// 	cf()
-	// 	fmt.Println("Timeout!")
-	// }()
+	ctx, cf := context.WithCancel(context.Background())
+	go func() {
+		time.Sleep(time.Second * 5)
+		cf()
+		fmt.Println("Timeout!")
+	}()
 
 	c := make(chan int, 3)
 	go numeros(c)
